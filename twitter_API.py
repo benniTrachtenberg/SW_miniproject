@@ -1,4 +1,7 @@
 ## Setup ##
+!pip install botometer
+!pip install tweepy
+
 # Variables
 screenName = '@wbz'
 numberTweets = 10
@@ -17,7 +20,6 @@ g_api_key =
 g_url = 'https://language.googleapis.com/v1beta2/documents:analyzeSentiment?key='
 
 ## Botometer ##
-!pip install botometer
 import botometer
 
 twitter_app_auth = {
@@ -57,7 +59,6 @@ print("   Financial Bot:        ", financial_bot_score)
 print("   Other Bot:            ", other_bot_score)
 
 ## Pull tweets
-!pip install tweepy
 
 import tweepy
 # authentication of API
@@ -89,6 +90,7 @@ headers = {
 magnitudes = []
 scores = []
 retweets = []
+not_retweet = []
 
 # collect sentiment data for each tweet
 for tweet in tweets:
@@ -105,26 +107,35 @@ for tweet in tweets:
   magnitudes.append(sentiment['documentSentiment']['magnitude'])
   scores.append(sentiment['documentSentiment']['score'])
   retweets.append(tweet.retweet_count)
+  
+  if(tweet.full_text[0:4] !='RT @'):
+    not_retweet.append(True)
+  else:
+    not_retweet.append(False)
 
 import numpy as np
 
 scores = np.array(scores)
 magnitudes = np.array(magnitudes)
 retweets = np.array(retweets)
+not_retweet = np.array(not_retweet)
 
 avg_score = np.mean(scores)
 avg_magnitude = np.mean(magnitudes)
-avg_retweets = np.mean(retweets)
-weighted_score = round(np.sum(scores*magnitudes)/np.sum(magnitudes), 2)
+avg_retweets = np.mean(retweets[not_retweet])
+weighted_score = np.sum(scores*magnitudes)/np.sum(magnitudes)
+original_tweets = np.mean(not_retweet)
 
-print('AVERAGE SENTIMENT:              ', avg_score)
-print('AVERAGE SENTIMENT MAGNITUDE:    ',avg_magnitude)
-print('AVERAGE RETWEETS:               ', avg_retweets)
-print('WEIGHTED SENTIMENT BY MAGNITUDE:', weighted_score)
+print('AVERAGE SENTIMENT:              ', round(avg_score, 2))
+print('AVERAGE SENTIMENT MAGNITUDE:    ', round(avg_magnitude, 2))
+print('AVERAGE RETWEETS:               ', round(avg_retweets, 2))
+print('WEIGHTED SENTIMENT BY MAGNITUDE:', round(weighted_score, 2))
+print('ORIGINAL TWEETS:                ', round(100*original_tweets, 2), '%')
 
-print('\nINDIVIDUAL SENTIMENTS:', scores)
-print('INDIVIDUAL MAGNITUDES:', magnitudes)
-print('INDIVIDUAL RETWEETS:  ', retweets)
+print('\nINDIVIDUAL TWEET SENTIMENTS:    ', scores)
+print('INDIVIDUAL TWEET MAGNITUDES:    ', magnitudes)
+print('INDIVIDUAL TWEET RETWEETS:      ', retweets)
+print('INDIVIDUAL TWEET IS NOT RETWEET ', not_retweet)
 
 ## Overall Impressions of user ##
 
@@ -139,17 +150,17 @@ else:
   bot = 'NOT A BOT'
 
 # positivity
-if (weighted_score>0.5):
+if (avg_score>0.5):
   sent = 'VERY POSITIVE'
-elif(weighted_score>0):
+elif(avg_score>0):
   sent = 'POSITIVE'
-elif(weighted_score>-0.5):
+elif(avg_score>-0.5):
   sent = 'NEGATIVE'
 else:
   sent = 'VERY NEGATIVE'
 
 # emotionality
-if (avg_magnitude>10):
+if (avg_magnitude>1):
   expr = 'EMOTIONAL TONE'
 else:
   expr = 'NEUTRAL TONE'
@@ -160,4 +171,14 @@ if (avg_retweets>20):
 else:
   infl = 'NOT INFLUENTIAL'
 
-print('User', screenName, 'is a', bot, ', uses', sent, 'language and', expr, ', and is', infl)
+# originality
+if (original_tweets>0.75):
+  orig = 'ORIGINAL TWEETS'
+elif(original_tweets>0.5):
+  orig = 'MOSTLY ORIGINAL TWEETS'
+elif(original_tweets>0.25):
+  orig = 'SOME ORIGINAL TWEETS'
+else:
+  orig = 'MOSTLY RETWEETS'
+
+print('User', screenName, 'is a', bot, ', uses', sent, 'language and', expr, ', is', infl, ', and produces', orig)
