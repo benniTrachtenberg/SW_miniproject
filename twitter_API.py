@@ -132,10 +132,10 @@ print('AVERAGE RETWEETS:               ', round(avg_retweets, 2))
 print('WEIGHTED SENTIMENT BY MAGNITUDE:', round(weighted_score, 2))
 print('ORIGINAL TWEETS:                ', round(100*original_tweets, 2), '%')
 
-print('\nINDIVIDUAL TWEET SENTIMENTS:    ', scores)
-print('INDIVIDUAL TWEET MAGNITUDES:    ', magnitudes)
-print('INDIVIDUAL TWEET RETWEETS:      ', retweets)
-print('INDIVIDUAL TWEET IS NOT RETWEET ', not_retweet)
+#print('\nINDIVIDUAL TWEET SENTIMENTS:    ', scores)
+#print('INDIVIDUAL TWEET MAGNITUDES:    ', magnitudes)
+#print('INDIVIDUAL TWEET RETWEETS:      ', retweets)
+#print('INDIVIDUAL TWEET IS NOT RETWEET ', not_retweet)
 
 ## Overall Impressions of user ##
 
