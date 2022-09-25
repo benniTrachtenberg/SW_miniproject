@@ -21,7 +21,7 @@ https://user-images.githubusercontent.com/75260880/192161054-b888022f-ae53-4b23-
 #### Colab backend simulation (using @BU_tweets)
 https://user-images.githubusercontent.com/75260880/192162377-eb17f3b4-8904-4757-b914-e62a0dc085c3.mp4
 
-#### Backend
+## Backend
 The backend was written in python and consisted of a call to the Twitter botometer API to determine if the user is a bot, the Twitter API to pull user tweets, and the Google NLP API to determine sentiment.
 
 For the Flask [8] aspect of the backend, the Python file awaits the screen name to be passed from JavaScript. From there a function takes the screen name and converts it to a string to be recognized by the APIs.
@@ -70,8 +70,7 @@ We used the data gathered to comment on the user's bot probability, positivity, 
 |       score < 25%       | MOSTLY RETWEETS        |
 
 ## Further Work
-Unfortunately, we did not have the time to perform error checking so the app will not work if you enter an incorrect twitter handle. Additionally, we did not have time to determine the main topics that an account tweets about.
-The functions to properly receive and convert the JavaScript input to a Python variable are as of yet incomplete.
+Unfortunately, we did not have the time to perform error checking so the app will not work if you enter an incorrect twitter handle. Additionally, we did not have time to determine the main topics that an account tweets about. Finally, the functions to properly receive and convert the JavaScript input to a Python variable are as of yet incomplete.
 
 ## Sources
 1. https://botometer.osome.iu.edu/
