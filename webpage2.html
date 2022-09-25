@@ -1,0 +1,38 @@
+<!doctype html>
+
+	<html>
+	<head>
+		<link rel = "stylesheet" type="text/css" href="mpstyle.css"/>
+		<title>Results</title>
+		<center><h1>Results of Botmeter and Google NLP</h1></center>
+		<hr />
+	</head>
+	<body>
+		<h2>Botometer</h2>
+			<p style="border-width: 3px; border-color:  darkred; border-style: ridge; padding:  20px; margin: 40px;">
+				print("Screen Name:             ",screenName) <br />
+				print("Main Language:           ", main_language) <br />
+				print("Bot Probability:         ", round(100*prob_bot,ndigits=2),"%") <br />
+				print("Overall Score:           ", overall_score) <br />
+				print("   Fake Follower:        ", fake_follower_score) <br />
+				print("   Self Declared Bot:    ", self_declared_bots_score) <br />
+				print("   Manually Labelled Bot:", manually_labeled_bot_score) <br />
+				print("   Spammer Bot:          ", spammer_bot_score) <br />
+				print("   Financial Bot:        ", financial_bot_score) <br />
+				print("   Other Bot:            ", other_bot_score) <br />
+			</p>
+		<h2>Google NLP</h2>
+			<p style="border-width: 3px; border-color:  darkred; border-style: ridge; padding:  20px; margin: 40px;">
+				print('AVERAGE SENTIMENT:              ', round(avg_score, 2)) <br />
+				print('AVERAGE SENTIMENT MAGNITUDE:    ', round(avg_magnitude, 2)) <br />
+				print('AVERAGE RETWEETS:               ', round(avg_retweets, 2)) <br />
+				print('WEIGHTED SENTIMENT BY MAGNITUDE:', round(weighted_score, 2)) <br />
+				print('ORIGINAL TWEETS:                ', round(100*original_tweets, 2), '%') <br />
+				<br />
+				print('\nINDIVIDUAL TWEET SENTIMENTS:    ', scores) <br />
+				print('INDIVIDUAL TWEET MAGNITUDES:    ', magnitudes) <br />
+				print('INDIVIDUAL TWEET RETWEETS:      ', retweets) <br />
+				print('INDIVIDUAL TWEET IS NOT RETWEET ', not_retweet) <br />
+			</p>
+	</body>
+	</html>

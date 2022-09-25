@@ -2,23 +2,55 @@
 
 	<html>
 	<head>
-		<style type = "text/css">
-			a {color: darkred;}
-			form{border-width: 3px; border-color:  darkred; border-style: ridge; padding:  20px}
-			body{background-color: mintcream;}
-		</style>
+		<link rel = "stylesheet" type="text/css" href="mpstyle.css"/>
 		<title>Mini Project 1</title>
-		<h1>Benyamin Trachtenberg and Patrick Peat</h1>
+		<center><h1>Benyamin Trachtenberg and Patrick Peat - EC463 Mini-Project 1</h1></center>
 		<hr />
 	</head>
 
 	<body>
-		 <!-- Text passed into the box should be form accepted as input to the botometer API and NLP API -->
-		 <form name = "twitter">
-		 	<p>Enter a Twitter account into the box below and it will be ran through the <em>Botometer</em> API and <em>Google NLP</em> API.</p>
-		 	<input type="text" name="twitterAccount"/>
-		 	<input type="submit" value="Check Account"/>
+		 <!-- Form Validation: Note there's no error checking on what you send, whatever's plugged in is sent to API -->
+		 <script type ="text/javascript">
+		 	function Validate() {
+		 		event.preventDefault();
+		 		var screenName = document.getElementById("twitterID").value;
+		 		alert(screenName + " is the inputted username");
+		 		
+		 		
+		 		window.location.href="webpage2.html";
+		 		
+
+		 		Posting(screenName);
+		 		Receiving();
+		 		//window.location.href="webpage2.html";
+		 		//
+		 	}
+
+		 	function Posting(screenName){
+		 		$.ajax({
+		 			url: Flask.url_for('FlaskFunction'),
+		 			type: 'POST',
+		 			data: JSON.stringify(screenName),
+		 			contentType: 'application/json',
+		 		})
+		 		.done(function(result){
+		 			console.log(result)
+		 		})
+
+		 		}; 
+		 	
+
+		 	function Receiving(){
+		 	}
+		 </script>
+
+ <!-- Text passed into the box should be form accepted as input to the botometer API and NLP API -->
+		 <form id = "twitter" onsubmit="Validate()" target="_self">
+		 	<p>Enter a Twitter account handle into the box below and it will be ran through the <em>Botometer</em> API and the <em>Google NLP</em> API.</p>
+		 	<input type="text" name="twitterAccount" id="twitterID" placeholder = "Enter Account Name" required>
+		 	<input type="submit" value="Check Account" onClick = "Validate()"/>
 		 </form>
-		<p>Click <a href="https://github.com/benniTrachtenberg/SW_miniproject">Here</a> to go to our Github page for this project.</p>
+
+		<center><p>Click <a href="https://github.com/benniTrachtenberg/SW_miniproject">Here</a> to go to the Github page for this project.</p></center>
 	</body>
 	</html>
